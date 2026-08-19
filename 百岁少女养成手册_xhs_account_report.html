@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>百岁少女养成手册 小红书账号拆解报告</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f5;
+      --paper: #fff;
+      --ink: #22201f;
+      --muted: #726d6a;
+      --line: #e6e3e0;
+      --soft: #f1efed;
+      --accent: #52A87D; /* Replace from creator covers. */
+      --accent-soft: #eef7f1;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--bg); font: 15px/1.65 -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; letter-spacing: 0; }
+    h1, h2, h3, p, span, a, code, td, th { overflow-wrap: anywhere; }
+    a { color: inherit; }
+    .evidence-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; color: var(--accent); font-size: 13px; font-weight: 750; text-decoration: none; }
+    .evidence-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .link-missing { display: inline-block; margin-top: 10px; color: var(--muted); font-size: 12px; }
+    img { display: block; max-width: 100%; }
+    .shell { display: grid; grid-template-columns: 236px minmax(0,1fr); min-height: 100dvh; }
+    .sidebar { position: sticky; top: 0; height: 100dvh; padding: 24px 18px; border-right: 1px solid var(--line); background: rgba(255,255,255,.94); }
+    .brand { display: flex; align-items: center; gap: 10px; margin: 0 6px 26px; font-weight: 750; }
+    .brand-mark { width: 30px; height: 30px; display: grid; place-items: center; border-radius: var(--radius); color: #fff; background: var(--accent); }
+    .nav { display: grid; gap: 4px; }
+    .nav a { min-height: 38px; display: flex; align-items: center; padding: 8px 10px; border-radius: var(--radius); color: #67615e; text-decoration: none; font-size: 14px; }
+    .nav a:hover, .nav a.active { color: var(--ink); background: var(--soft); }
+    .side-note { position: absolute; left: 24px; bottom: 26px; color: var(--muted); font-size: 12px; }
+    .topbar { display: none; }
+    main { min-width: 0; }
+    .wrap { width: min(1180px, calc(100% - 56px)); margin: 0 auto; }
+    .hero { min-height: 610px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding: 54px 0 48px; }
+    .profile { display: flex; align-items: center; gap: 13px; margin-bottom: 22px; }
+    .avatar { width: 58px; height: 58px; object-fit: cover; border: 1px solid var(--line); border-radius: 50%; background: var(--soft); }
+    .profile strong { display: block; font-size: 18px; }
+    .profile span { color: var(--muted); font-size: 13px; }
+    h1 { max-width: 720px; margin: 0; font-size: clamp(42px,4.2vw,60px); line-height: 1.05; }
+    .lead { max-width: 650px; margin: 22px 0 0; color: #5f5956; font-size: 17px; }
+    .actions { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
+    .btn { display: inline-flex; min-height: 42px; align-items: center; padding: 9px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); text-decoration: none; font-weight: 700; }
+    .btn.primary { color: #fff; border-color: var(--accent); background: var(--accent); }
+    .hero-visual { position: relative; }
+    .hero-cover { width: min(440px,100%); aspect-ratio: 3/4; margin-left: auto; object-fit: contain; border-radius: var(--radius); background: var(--soft); }
+    .verdict { position: absolute; left: -28px; bottom: 46px; width: min(330px,84%); padding: 18px; border: 1px solid color-mix(in srgb,var(--accent) 35%,white); border-radius: var(--radius); background: rgba(255,255,255,.95); }
+    .verdict b { color: var(--accent); }
+    .verdict p { margin: 5px 0 0; color: #5f5956; font-size: 14px; }
+    .metrics { display: grid; grid-template-columns: repeat(4,1fr); border-block: 1px solid var(--line); }
+    .metric { padding: 22px; border-right: 1px solid var(--line); }
+    .metric:last-child { border-right: 0; }
+    .metric strong { display: block; font-size: 28px; line-height: 1.2; }
+    .metric span { color: var(--muted); font-size: 13px; }
+    .summary { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 14px; padding: 34px 0 60px; }
+    .summary article, .card { padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
+    .summary article:first-child { color: #fff; border-color: #292625; background: #292625; }
+    .label { display: block; margin-bottom: 10px; color: var(--accent); font-size: 12px; font-weight: 800; }
+    .summary article:first-child .label { color: color-mix(in srgb,var(--accent) 55%,white); }
+    .summary h2, .card h3 { margin: 0; line-height: 1.35; }
+    .summary p, .card p { margin: 10px 0 0; color: var(--muted); font-size: 14px; }
+    .summary article:first-child p { color: #d5cfcc; }
+    section { padding: 68px 0; border-top: 1px solid var(--line); scroll-margin-top: 18px; }
+    .section-head { max-width: 780px; margin-bottom: 30px; }
+    .section-head h2 { margin: 0; font-size: clamp(30px,4vw,48px); line-height: 1.15; }
+    .section-head p { margin: 12px 0 0; color: var(--muted); }
+    .callout { padding: 20px 22px; border-left: 4px solid var(--accent); background: var(--accent-soft); font-weight: 700; }
+    .stages { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    .stage { padding: 24px; background: var(--paper); border-right: 1px solid var(--line); }
+    .stage:last-child { border-right: 0; }
+    .stage time { display: block; margin-bottom: 12px; color: var(--accent); font-size: 12px; font-weight: 800; }
+    .stage h3 { margin: 0 0 8px; }
+    .stage p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
+    .stage .shift { padding-top: 12px; border-top: 1px solid var(--line); color: var(--ink); }
+    .chart { display: grid; grid-template-columns: 280px 1fr; gap: 28px; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
+    .chart-placeholder { min-height: 220px; display: grid; place-items: center; color: var(--muted); border-bottom: 1px solid var(--line); }
+    .table-wrap { margin-top: 22px; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
+    table { width: 100%; min-width: 760px; border-collapse: collapse; }
+    th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { color: var(--muted); background: #faf9f8; font-size: 12px; }
+    tr:last-child td { border-bottom: 0; }
+    .diagnosis { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+    .diagnosis .card:last-child { grid-column: 1/-1; }
+    .card-head { display: flex; justify-content: space-between; gap: 12px; }
+    .grade { color: var(--accent); font-size: 12px; font-weight: 800; }
+    .action { padding-top: 10px; border-top: 1px solid var(--line); color: var(--ink) !important; font-weight: 700; }
+    .covers { display: grid; grid-template-columns: repeat(5,1fr); gap: 14px; }
+    .cover-card { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
+    .cover-frame { aspect-ratio: 3/4; display: grid; place-items: center; overflow: hidden; background: var(--soft); }
+    .cover-frame img { width: 100%; height: 100%; object-fit: contain; }
+    .cover-meta { padding: 13px; font-size: 13px; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .formula { padding: 26px; color: #fff; border-radius: var(--radius); background: #292625; }
+    .formula code { white-space: pre-wrap; color: color-mix(in srgb,var(--accent) 45%,white); line-height: 1.85; }
+    .sources { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding-bottom: 80px; }
+    .sources p { color: var(--muted); font-size: 13px; }
+    @media (max-width:980px) {
+      .shell { display: block; }
+      .sidebar { display: none; }
+      .topbar { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center; min-height: 58px; padding: 10px 18px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.95); }
+      .wrap { width: min(100% - 32px,760px); }
+      .hero { min-height: auto; grid-template-columns: 1fr; }
+      .hero-cover { margin: 0 auto; }
+      .verdict { left: 0; }
+      .summary, .chart, .two-col, .sources { grid-template-columns: 1fr; }
+      .covers, .stages { grid-template-columns: repeat(2,1fr); }
+      .stage:nth-child(2) { border-right: 0; }
+    }
+    @media (max-width:620px) {
+      .wrap { width: min(100% - 24px,520px); }
+      h1 { font-size: 42px; }
+      .metrics { grid-template-columns: 1fr 1fr; }
+      .metric:nth-child(2) { border-right: 0; }
+      .covers, .stages, .diagnosis { grid-template-columns: 1fr; }
+      .diagnosis .card:last-child { grid-column: auto; }
+      .stage { border-right: 0; border-bottom: 1px solid var(--line); }
+      .stage:last-child { border-bottom: 0; }
+    }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <div class="topbar"><b>百岁少女养成手册 账号拆解</b><a class="btn" href="#growth">看发展路线</a></div>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">A</span><span>账号拆解</span></div>
+      <nav class="nav" aria-label="报告导航">
+        <a href="#overview">核心判断</a><a href="#evolution">账号演化</a><a href="#repeat">爆款资产</a><a href="#diagnosis">内容诊断</a><a href="#covers">真实封面</a><a href="#formula">可复制公式</a><a href="#compliance">合规边界</a><a href="#growth">发展路线</a>
+      </nav>
+      <p class="side-note">2026年7月21日<br>公开可见数据（主页 SSR 内嵌 __INITIAL_STATE__）</p>
+    </aside>
+    <main>
+      <div class="wrap" id="overview">
+        <header class="hero">
+          <div><a href="https://www.xiaohongshu.com/user/profile/5efb299c0000000001004b93" target="_blank" rel="noopener noreferrer" style="text-decoration:none"><div class="profile"><img class="avatar" src="assets/baishishaonv/avatar.webp" alt="百岁少女养成手册头像"><div><strong>百岁少女养成手册</strong><span>女生向健康科普 · 运动×睡眠×饮食×情绪</span></div></div></a><h1>它靠「固定 IP 形象 + 数字清单式选题 × 强情绪标题钩子 × 场景化道具封面」，在女生养生赛道稳定复制高收藏的「小事 / 习惯」类笔记，把内容做成了可识别的品牌资产。</h1><p class="lead">账号的核心增长逻辑不是某一条爆文，而是一套稳定的内容生产系统：同一个治愈系 IP 形象，配不同场景道具（身高尺 / 床 / 日历 / 桌面），搭配「数字 + 清单 + 强情绪词」的标题公式（8 大行为 / 12 个习惯 / 100 件小事），覆盖 18–30 岁女性最关心的四大健康支柱——运动、睡眠、饮食、情绪。每篇换话题但保持同一结构与视觉识别度，复用提升的是「命中概率」，而不是保证每篇都爆。</p><div class="actions"><a class="btn primary" href="#repeat">看复用数据</a><a class="btn" href="https://www.xiaohongshu.com/user/profile/5efb299c0000000001004b93" target="_blank" rel="noopener noreferrer">打开账号</a></div></div>
+          <div class="hero-visual"><a href="https://www.xiaohongshu.com/user/profile/5efb299c0000000001004b93" target="_blank" rel="noopener noreferrer" aria-label="查看代表笔记"><img class="hero-cover" src="assets/baishishaonv/note_28.webp" alt="百岁少女养成手册 最高赞笔记封面：假如你从4 月1日开始自律，悄悄超越同龄人"></a><div class="verdict"><b>确定结论</b><p>「假如你从 X 月开始自律」时间锚点模板是该账号当前最强的爆款资产：4 月版拿到 1 万赞（全账号第一），但同结构的 5 月版仅 625 赞——模板吸引力已被验证，最终数据则高度依赖发布时机与细节。</p><a class="evidence-link" href="https://www.xiaohongshu.com/user/profile/5efb299c0000000001004b93" target="_blank" rel="noopener noreferrer">查看原笔记 ↗</a></div></div>
+        </header>
+      </div>
+      <div class="wrap metrics"><div class="metric"><strong>30</strong><span>可见笔记</span></div>
+<div class="metric"><strong>38 – 1万</strong><span>点赞跨度</span></div>
+<div class="metric"><strong>约 263×</strong><span>爆款 / 冷门倍差</span></div>
+<div class="metric"><strong>4</strong><span>内容支柱</span></div></div>
+      <div class="wrap summary"><article><span class="label">整体策略</span><h2>固定 IP + 清单式内容 + 四大支柱全覆盖</h2><p>不追热点，而是围绕目标人群（18–30 岁、有健康 / 外貌焦虑的女性）的长期需求，用「可枚举、可执行、可收藏」的结构反复触达，把不确定的爆款变成可批量生产的稳定动作。</p></article><article class="card"><span class="label">最大优势</span><h3>品牌识别度极高</h3><p>统一 IP 形象 + 场景化封面 + 薄荷绿治愈配色形成强记忆点，用户刷到就知道是「那个养生女孩」。标题公式稳定（数字 + 清单 + 强情绪词），既降低创作决策成本，又保证输出一致性。</p></article><article class="card"><span class="label">主要问题</span><h3>爆款方差极大</h3><p>30 篇可见样本点赞从 38 到 1 万，跨度约 263 倍。保险 / 转运 / 通用幸福感等选题明显偏离核心受众，拉低了整体稳定性——账号尚未把火力完全收敛到已验证的爆款赛道。</p></article></div>
+      <section id="evolution"><div class="wrap"><div class="section-head"><h2>内容版图（无发布时间，按主题聚类）</h2><p>公开主页未返回每篇的发布时间戳，因此以下不是时间线，而是对 30 篇可见笔记的主题聚类。若要精确的账号演化分期，需要逐篇进入笔记详情页取创建时间。</p></div><div class="stages"><div class="stage"><time>主力赛道 · 高命中</time><h3>自律 / 时间管理 / 睡眠</h3><p>代表：「4 月自律」1万、「长高八大行为」5050、「入睡法」2110、「12 个习惯多出 3 小时」1185。</p><p class="shift">拿到全账号前几名，是账号的基本盘与增长引擎。</p></div><div class="stage"><time>稳定腰部 · 女性刚需</time><h3>外貌 / 护肤 / 经期 / 肠道</h3><p>代表：「AI 黄金便便公式」1592、「戒糖逆袭冷白皮」277、「痛经 10 件小事」245、「高颅顶」349。</p><p class="shift">数据中等偏稳，是维持更新节奏与收藏量的腰部内容。</p></div><div class="stage"><time>试探 / 偏离 · 待收敛</time><h3>保险 / 转运 / 通用幸福感</h3><p>代表：「保险这样买」38、「转运 50 件小事」308、「幸福感 100 件小事」52。</p><p class="shift">偏离核心受众，数据普遍垫底，是应当削减的方向。</p></div></div><div class="callout">结论：账号的「养生 × 自律 × 女性外貌」三角已经跑通，真正拖后腿的是零散的泛生活 / 玄学 / 金融选题。把这部分产能挪回三大主力赛道，是最低成本的稳定性提升。</div></div></section>
+      <section id="repeat"><div class="wrap"><div class="section-head"><h2>被反复验证的爆款资产</h2><p>把 30 篇按点赞排序后，能清晰看到哪些「选题模板」是可复用的高命中资产，哪些只是偶发。下表为可见样本的完整排序（点赞为公开可见值）。</p></div><div class="callout">最强资产 = 时间锚点自律模板 + 身体 / 外貌「无意识变好」叙事 + 睡眠刚需。这三类占据了 Top5 中的 4 席。</div><div class="chart"><div><h3 style="margin:0 0 10px">三类高命中模板</h3><p style="color:var(--muted);font-size:14px;margin:0 0 8px">① 时间锚点自律：「假如你从 X 月开始自律…」</p><p style="color:var(--muted);font-size:14px;margin:0 0 8px">② 无意识变好：「无意识长高的八大行为」「12 个习惯多出 3 小时」</p><p style="color:var(--muted);font-size:14px;margin:0">③ 睡眠 / 身体刚需：「史上最爽入睡法」「黄金便便公式」</p></div><div class="chart-placeholder"><div style="width:100%"><div style="margin:0 0 12px"><div style="font-size:13px;margin-bottom:4px">假如你从4 月1日开始自律，悄悄超越同龄人</div><div style="display:flex;align-items:center;gap:8px"><div style="height:14px;width:100%;background:#52A87D;border-radius:4px"></div><b style="font-size:13px">1万</b></div></div><div style="margin:0 0 12px"><div style="font-size:13px;margin-bottom:4px">无意识长高的八大行为，偷偷蹿个儿</div><div style="display:flex;align-items:center;gap:8px"><div style="height:14px;width:50%;background:#52A87D;border-radius:4px"></div><b style="font-size:13px">5050</b></div></div><div style="margin:0 0 12px"><div style="font-size:13px;margin-bottom:4px">睡不着进！史上最爽入睡法，一觉到天明</div><div style="display:flex;align-items:center;gap:8px"><div style="height:14px;width:21%;background:#52A87D;border-radius:4px"></div><b style="font-size:13px">2110</b></div></div><div style="margin:0 0 12px"><div style="font-size:13px;margin-bottom:4px">谁还没试过！AI给的黄金便便公式也太懂我了</div><div style="display:flex;align-items:center;gap:8px"><div style="height:14px;width:16%;background:#52A87D;border-radius:4px"></div><b style="font-size:13px">1592</b></div></div><div style="margin:0 0 12px"><div style="font-size:13px;margin-bottom:4px">这12个习惯，让你每天多出3小时</div><div style="display:flex;align-items:center;gap:8px"><div style="height:14px;width:12%;background:#52A87D;border-radius:4px"></div><b style="font-size:13px">1185</b></div></div><div style="margin:0 0 12px"><div style="font-size:13px;margin-bottom:4px">假如你从5 月1日开始自律，夏天会发生什么</div><div style="display:flex;align-items:center;gap:8px"><div style="height:14px;width:6%;background:#52A87D;border-radius:4px"></div><b style="font-size:13px">625</b></div></div></div></div></div><div class="table-wrap"><table><thead><tr><th>排名</th><th>标题</th><th>点赞</th><th>原笔记</th></tr></thead><tbody><tr><td>1</td><td>假如你从4 月1日开始自律，悄悄超越同龄人</td><td><b>1万</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>2</td><td>无意识长高的八大行为，偷偷蹿个儿</td><td><b>5050</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>3</td><td>睡不着进！史上最爽入睡法，一觉到天明</td><td><b>2110</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>4</td><td>谁还没试过！AI给的黄金便便公式也太懂我了</td><td><b>1592</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>5</td><td>这12个习惯，让你每天多出3小时</td><td><b>1185</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>6</td><td>假如你从5 月1日开始自律，夏天会发生什么</td><td><b>625</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>7</td><td>建议：多去做疯狂长脑子的行为</td><td><b>586</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>8</td><td>2026 普通人入局养生赛道，看这篇就够了</td><td><b>567</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>9</td><td>大美女只吃这些高级的苦，坚持1个月蜕变</td><td><b>431</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>10</td><td>脸黄长痘别只怪护肤品！熬夜女生必看</td><td><b>368</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>11</td><td>如何正确洗出蓬松高颅顶，一篇说清楚</td><td><b>349</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>12</td><td>周末可以做的N件事（单人版）</td><td><b>321</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>13</td><td>人转运最快的50件小事，扔掉后磁场更干净了</td><td><b>308</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>14</td><td>戒糖了脸还是黄？13 个习惯轻松逆袭冷白皮</td><td><b>277</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>15</td><td>痛经女孩必看！坚持10件小事，小腹超舒服✨</td><td><b>245</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>16</td><td>气血不足的人，每天固定的12个运动</td><td><b>196</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>17</td><td>一个月内提升免疫力，把小毛病全赶走！</td><td><b>190</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>18</td><td>经常熬夜的人，这些地方会巨臭！</td><td><b>168</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>19</td><td>一些不正经却很有效的变美小tips</td><td><b>138</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>20</td><td>面部不显老的8个小技巧，建议女生死磕</td><td><b>125</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>21</td><td>女性微有攻击性的小习惯，建议女生死磕</td><td><b>119</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>22</td><td>修复前额叶，无痛长脑的12个小习惯</td><td><b>111</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>23</td><td>一定要养好你的心脏（建议收藏）</td><td><b>79</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>24</td><td>普通人逆袭最快的方式：早起！</td><td><b>62</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>25</td><td>总是痛经？给女生改善经期不适的Tips</td><td><b>61</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>26</td><td>夏天提升幸福感的100件小事🌈</td><td><b>52</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>27</td><td>压力很大时，求你去做这10件小事✨</td><td><b>52</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>28</td><td>坚持这15件小事，脸蛋耐看度+100%💯</td><td><b>49</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>29</td><td>身体巨健康的20个表现，你占了几个？</td><td><b>49</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr><tr><td>30</td><td>月薪5000+给全家人的保险这样买最省钱</td><td><b>38</b></td><td><span class="link-missing">链接未获取（SSR 无 noteId）</span></td></tr></tbody></table></div></div></section>
+      <section id="diagnosis"><div class="wrap"><div class="section-head"><h2>内容诊断：5 个维度</h2><p>基于 30 篇可见样本，从选题、标题、封面、结构、人设五个维度给出评级与可执行动作。</p></div><div class="diagnosis"><div class="card"><div class="card-head"><h3>选题</h3><span class="grade">B+ · 方向对但不够聚焦</span></div><p>四大支柱定位清晰，但混入保险 / 转运 / 泛幸福感等低相关选题，稀释了账号标签。</p><p class="action">动作：砍掉玄学 / 金融 / 泛生活选题，把 80% 产能压在自律 · 睡眠 · 外貌变好三条线。</p></div><div class="card"><div class="card-head"><h3>标题</h3><span class="grade">A- · 公式成熟</span></div><p>「数字 + 清单 + 强情绪词」公式稳定，时间锚点（假如你从 X 月开始）与身体钩子（巨臭 / 黄金便便）钩子力强。</p><p class="action">动作：固化「时间锚点 / 无意识变好 / 反常识身体信号」三套标题母版，滚动复用。</p></div><div class="card"><div class="card-head"><h3>封面</h3><span class="grade">A- · 识别度高</span></div><p>统一 IP 形象 + 场景道具 + 薄荷绿配色，一眼可辨；高赞封面道具与主题强绑定（日历 / 身高尺 / 床）。</p><p class="action">动作：把「大字主标题 + IP + 单一道具」定为封面模板，避免信息过载。</p></div><div class="card"><div class="card-head"><h3>结构</h3><span class="grade">B · 清单化易收藏</span></div><p>清单体天然利于收藏，但同质化高，缺少系列化 / 连载钩子来拉动关注转化。</p><p class="action">动作：给主力赛道做成「系列 EP01/02…」，在结尾引导关注追更。</p></div><div class="card"><div class="card-head"><h3>人设</h3><span class="grade">A- · 资产已成型</span></div><p>「百岁少女」IP 与「松弛不内耗」价值主张一致，人设即品牌，是账号最难被复制的护城河。</p><p class="action">动作：强化 IP 口头禅 / 固定栏目，把人设从「封面形象」升级为「内容语气」。</p></div></div></div></section>
+      <section id="covers"><div class="wrap"><div class="section-head"><h2>真实封面：高赞 vs 冷门</h2><p>以下均为账号真实封面（已实际查看核对）。共性：薄荷绿 / 粉的治愈配色 + 手绘 IP 女孩 + 一句大字主标题 + 单一场景道具。高赞封面的主标题更短、情绪更强、道具与主题强绑定。</p></div><div class="covers"><div class="cover-card"><div class="cover-frame"><img src="assets/baishishaonv/note_28.webp" alt="假如你从4 月1日开始自律，悄悄超越同龄人封面" loading="lazy"></div><div class="cover-meta">假如你从4 月1日开始自律，悄悄超越同龄人<br><b style="color:#52A87D">❤ 1万</b></div></div><div class="cover-card"><div class="cover-frame"><img src="assets/baishishaonv/note_19.webp" alt="无意识长高的八大行为，偷偷蹿个儿封面" loading="lazy"></div><div class="cover-meta">无意识长高的八大行为，偷偷蹿个儿<br><b style="color:#52A87D">❤ 5050</b></div></div><div class="cover-card"><div class="cover-frame"><img src="assets/baishishaonv/note_14.webp" alt="睡不着进！史上最爽入睡法，一觉到天明封面" loading="lazy"></div><div class="cover-meta">睡不着进！史上最爽入睡法，一觉到天明<br><b style="color:#52A87D">❤ 2110</b></div></div><div class="cover-card"><div class="cover-frame"><img src="assets/baishishaonv/note_11.webp" alt="谁还没试过！AI给的黄金便便公式也太懂我了封面" loading="lazy"></div><div class="cover-meta">谁还没试过！AI给的黄金便便公式也太懂我了<br><b style="color:#52A87D">❤ 1592</b></div></div><div class="cover-card"><div class="cover-frame"><img src="assets/baishishaonv/note_05.webp" alt="这12个习惯，让你每天多出3小时封面" loading="lazy"></div><div class="cover-meta">这12个习惯，让你每天多出3小时<br><b style="color:#52A87D">❤ 1185</b></div></div><div class="cover-card"><div class="cover-frame"><img src="assets/baishishaonv/note_16.webp" alt="假如你从5 月1日开始自律，夏天会发生什么封面" loading="lazy"></div><div class="cover-meta">假如你从5 月1日开始自律，夏天会发生什么<br><b style="color:#52A87D">❤ 625</b></div></div><div class="cover-card"><div class="cover-frame"><img src="assets/baishishaonv/note_25.webp" alt="建议：多去做疯狂长脑子的行为封面" loading="lazy"></div><div class="cover-meta">建议：多去做疯狂长脑子的行为<br><b style="color:#52A87D">❤ 586</b></div></div><div class="cover-card"><div class="cover-frame"><img src="assets/baishishaonv/note_06.webp" alt="2026 普通人入局养生赛道，看这篇就够了封面" loading="lazy"></div><div class="cover-meta">2026 普通人入局养生赛道，看这篇就够了<br><b style="color:#52A87D">❤ 567</b></div></div><div class="cover-card"><div class="cover-frame"><img src="assets/baishishaonv/note_24.webp" alt="大美女只吃这些高级的苦，坚持1个月蜕变封面" loading="lazy"></div><div class="cover-meta">大美女只吃这些高级的苦，坚持1个月蜕变<br><b style="color:#52A87D">❤ 431</b></div></div><div class="cover-card"><div class="cover-frame"><img src="assets/baishishaonv/note_12.webp" alt="脸黄长痘别只怪护肤品！熬夜女生必看封面" loading="lazy"></div><div class="cover-meta">脸黄长痘别只怪护肤品！熬夜女生必看<br><b style="color:#52A87D">❤ 368</b></div></div></div><div class="two-col"><div class="card"><span class="label">高赞样本 · 1万</span><div class="cover-frame" style="max-width:220px;margin:10px 0"><img src="assets/baishishaonv/note_28.webp" alt="假如你从4 月1日开始自律，悄悄超越同龄人"></div><h3 style="font-size:16px">假如你从4 月1日开始自律，悄悄超越同龄人</h3><p>时间锚点 + 「悄悄超越同龄人」的对比诱惑；日历道具直给场景，主标题一句话说清收益。</p></div><div class="card"><span class="label">冷门样本 · 38</span><div class="cover-frame" style="max-width:220px;margin:10px 0"><img src="assets/baishishaonv/note_09.webp" alt="月薪5000+给全家人的保险这样买最省钱"></div><h3 style="font-size:16px">月薪5000+给全家人的保险这样买最省钱</h3><p>保险 / 理财偏离养生人设，「月薪 5000」缺少情绪张力与身体收益钩子，与账号标签错位。</p></div></div></div></section>
+      <section id="formula"><div class="wrap"><div class="section-head"><h2>可复制的爆款公式</h2><p>把该账号验证过的规律抽象成可直接套用的公式与清单。</p></div><div class="two-col"><div class="formula"><code>爆款笔记 =
+  【时间 / 身体锚点】（假如你从X月 / 无意识 / 坚持N天）
++ 【数字清单】（8 大行为 / 12 个习惯 / 10 件小事）
++ 【强情绪收益】（悄悄超越同龄人 / 一觉到天明 / 冷白皮）
++ 【女生刚需支柱】（睡眠 / 外貌 / 自律 / 经期）
++ 【统一 IP 封面】（手绘女孩 + 薄荷绿 + 单一道具 + 大字主标题）</code></div><div><div class="card"><h3>直接照搬</h3><p>时间锚点标题母版、清单体结构、统一 IP + 薄荷绿封面系统。</p></div><div class="card" style="margin-top:14px"><h3>可以加强</h3><p>主力赛道系列化连载、结尾关注引导、封面主标题再精简。</p></div><div class="card" style="margin-top:14px"><h3>务必避免</h3><p>保险 / 转运 / 泛幸福感等偏离人设选题；封面信息过载。</p></div></div></div></div></section>
+      <section id="compliance"><div class="wrap"><div class="section-head"><h2>合规与边界</h2><p>健康科普赛道的红线，照抄前必须先守住。</p></div><div class="two-col"><div class="card"><h3>不做医疗承诺</h3><p>养生 / 习惯类内容不得宣称治疗、治愈或替代就医；「改善」「缓解」需谨慎并标注个体差异。</p></div><div class="card"><h3>数据与来源</h3><p>科普结论尽量给出可信来源，避免把个人经验包装成「官方 / 医学定论」。</p></div><div class="card"><h3>不碰高风险品类</h3><p>保险 / 理财等金融建议需资质，普通养生号不宜涉足，也与人设错位。</p></div><div class="card"><h3>尊重原创</h3><p>封面 IP、配色、模板可借鉴方法论，但不得直接盗用他人素材与图片。</p></div></div></div></section>
+      <section id="growth"><div class="wrap"><div class="section-head"><h2>如果要做一个同类账号：发展路线</h2><p>把以上拆解转成一套可执行的冷启动到成长路径。</p></div><div class="callout">迁移公式：选一个「女生高频健康 / 变好」母题 → 套用「时间/身体锚点 + 数字清单 + 强情绪收益」标题 → 固定 IP + 单道具封面 → 先密集测试主力三赛道，再按数据收敛。</div><div class="two-col"><div class="card"><span class="label">向该账号学什么</span><h3>系统化 &gt; 单点爆款</h3><p>学它的「标题母版 + 封面模板 + 支柱矩阵」这套可复制系统，而不是抄某一条爆文。</p></div><div class="card"><span class="label">起步地基</span><h3>先立住 IP 与配色</h3><p>第一步不是追爆款，而是定下 IP 形象、主色（如薄荷绿）、标题公式三件套，形成一眼可辨的识别度。</p></div></div><div class="stages"><div class="stage"><time>0–1 · 冷启动</time><h3>定位 + IP + 封面模板一次性立住</h3><p>发 10–15 篇覆盖自律 / 睡眠 / 外貌三赛道，快速测出自己的高命中母题。</p><p class="shift">目标：跑出 2–3 条 500+ 赞的验证性笔记。</p></div><div class="stage"><time>1–10 · 放大</time><h3>围绕验证过的模板批量复制</h3><p>把跑通的标题母版做成系列连载，结尾引导关注，稳定周更节奏。</p><p class="shift">目标：单条稳定破千，涨粉进入正循环。</p></div><div class="stage"><time>10+ · 沉淀</time><h3>从流量转向品牌与转化</h3><p>沉淀固定栏目 / 口头禅，逐步接入选品或知识付费等变现。</p><p class="shift">目标：把内容资产转成商业资产。</p></div></div><div class="two-col"><div class="card"><span class="label">内容配比建议</span><h3>7 : 2 : 1</h3><p>70% 主力赛道（自律 / 睡眠 / 外貌变好）保命中；20% 女性刚需（经期 / 护肤 / 肠道）维稳；10% 试探新母题，验证后再放大。</p></div><div class="card"><span class="label">可套用标题示例</span><p>· 假如你从 8 月开始早睡，开学时会发生什么</p><p>· 无意识变瘦的 7 个日常小动作</p><p>· 坚持 21 天，皮肤肉眼可见变透亮的清单</p></div></div></div></section>
+      <section><div class="wrap sources"><div><span class="label">数据说明</span><p>本报告基于 2026-07-21 抓取的公开主页数据，来源为主页 HTML 内嵌的 __INITIAL_STATE__（浏览器访问公开页时同样加载的内容，未绕过登录 / 风控）。共解析 30 篇可见笔记的标题、点赞与封面。<b>局限：</b>公开载荷未包含粉丝数、每篇发布时间戳与笔记详情页 noteId，因此不做时间线演化与逐篇跳转链接，相关处已如实标注。</p></div><div><span class="label">信息源</span><p>· 账号主页：<a href="https://www.xiaohongshu.com/user/profile/5efb299c0000000001004b93" target="_blank" rel="noopener noreferrer">https://www.xiaohongshu.com/user/profile/5efb299c0000000001004b93</a></p><p>· 30 篇笔记封面：均已本地化并实际查看核对</p><p>· 分析框架：ache-chaijie-skill 内置小红书拆解方法论</p></div></div></section>
+    </main>
+  </div>
+  <script>
+    const links=[...document.querySelectorAll('.nav a')];
+    const targets=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===`#${entry.target.id}`));}),{rootMargin:'-25% 0px -68% 0px'});
+    targets.forEach(target=>observer.observe(target));
+  </script>
+</body>
+</html>

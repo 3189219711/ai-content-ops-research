@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 内容运营工具链 · 六项目调研报告</title>
+<style>
+  :root{
+    --bg:#f7f8fb;--panel:#ffffff;--ink:#1e2430;--ink-soft:#5b6472;--line:#e6e9f0;
+    --brand:#4f46e5;--brand-soft:#eef0ff;--accent:#0891b2;
+    --c1:#4f46e5;--c2:#0891b2;--c3:#db2777;--c4:#ea580c;--c5:#16a34a;--c6:#9333ea;
+    --good:#16a34a;--warn:#d97706;--bad:#dc2626;
+    --shadow:0 1px 2px rgba(16,24,40,.04),0 8px 24px rgba(16,24,40,.06);
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.65;font-size:15px;}
+  a{color:var(--brand);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .logo{font-weight:800;letter-spacing:.3px;font-size:16px;display:flex;align-items:center;gap:10px}
+  .logo .dot{width:11px;height:11px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--accent))}
+  .nav-links{display:flex;gap:6px;flex-wrap:wrap}
+  .nav-links a{font-size:13px;color:var(--ink-soft);padding:7px 12px;border-radius:9px}
+  .nav-links a:hover{background:var(--brand-soft);color:var(--brand);text-decoration:none}
+
+  .hero{background:radial-gradient(900px 380px at 85% -10%,rgba(79,70,229,.12),transparent 60%),radial-gradient(700px 320px at 8% 0%,rgba(8,145,178,.10),transparent 55%),var(--panel);border-bottom:1px solid var(--line);padding:54px 0 40px}
+  .eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:1.5px;color:var(--brand);background:var(--brand-soft);padding:5px 12px;border-radius:999px;text-transform:uppercase}
+  .hero h1{font-size:34px;line-height:1.2;margin:16px 0 10px;font-weight:800;letter-spacing:-.5px}
+  .hero p.lead{font-size:16px;color:var(--ink-soft);max-width:960px;margin:0 0 26px}
+
+  section{padding:46px 0}
+  .sec-head{margin-bottom:22px}
+  .sec-head .k{font-size:12px;font-weight:700;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase}
+  .sec-head h2{font-size:25px;margin:6px 0 6px;font-weight:800;letter-spacing:-.3px}
+  .sec-head p{color:var(--ink-soft);margin:0;max-width:960px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .pad{padding:22px}
+
+  /* Matrix */
+  .matrix{width:100%;border-collapse:collapse;font-size:13.5px;overflow:hidden;border-radius:14px;border:1px solid var(--line)}
+  .matrix th,.matrix td{padding:13px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  .matrix thead th{background:#fbfcfe;font-size:12.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.4px;font-weight:700}
+  .matrix tbody tr:hover{background:#fafbff}
+  .matrix td.name{font-weight:700}
+  .matrix .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:6px;background:var(--brand-soft);color:var(--brand);font-weight:700;white-space:nowrap}
+  .matrix .grow{color:var(--bad);font-weight:700}.matrix .warn{color:var(--warn);font-weight:700}.matrix .ok{color:var(--good);font-weight:700}
+
+  /* Star badge */
+  .star-badge{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #e6e9f0;padding:3px 10px;border-radius:8px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;color:#24292f;box-shadow:0 1px 3px rgba(27,31,36,.04)}
+  .star-badge svg{fill:#e3b341;width:15px;height:15px;flex-shrink:0}
+  .star-badge b{font-weight:600}
+  .fork-badge{font-size:11px;color:#8b949e;margin-left:4px}
+
+  /* Proj card */
+  .proj{margin-bottom:28px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);overflow:hidden}
+  .proj-head{display:flex;align-items:center;gap:14px;padding:20px 22px;border-bottom:1px solid var(--line);background:#fbfcfe}
+  .proj-head .idx{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:16px;flex:0 0 auto}
+  .proj-head h3{margin:0;font-size:18px;font-weight:800}
+  .proj-head .repo{font-size:12.5px;color:var(--ink-soft);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .proj-head .meta-right{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+  .proj-body{padding:22px}
+  .field h4{margin:0 0 7px;font-size:12.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);font-weight:700}
+  .field p{margin:0;color:var(--ink-soft);font-size:14px}
+  .field ul{margin:0 0 10px;padding-left:18px;color:var(--ink-soft);font-size:14px}
+  .field ul li{margin:3px 0}
+  .pill-row{display:flex;flex-wrap:wrap;gap:7px}
+  .pill{font-size:12px;background:#f1f3f9;border:1px solid var(--line);padding:4px 10px;border-radius:8px;color:var(--ink)}
+  .pill.lang{background:#fff7ed;border-color:#fed7aa;color:#9a3412}
+  .pill.tool{background:#ecfeff;border-color:#a5f3fc;color:#0e7490}
+  .facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:4px}
+  .fact{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fbfcfe}
+  .fact .v{font-weight:800;font-size:15px}
+  .fact .k{font-size:11.5px;color:var(--ink-soft)}
+  .flag{font-size:13.5px;padding:10px 12px;border-radius:10px;margin:6px 0}
+  .flag.good{background:#f0fdf4;border:1px solid #bbf7d0;color:#166534}
+  .flag.warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+  .flag.bad{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
+
+  /* Sub-sections inside project */
+  .sub-sec{margin:18px 0 0}
+  .sub-sec h4.fw-title{font-size:15px;font-weight:800;margin:0 0 8px;padding-left:10px;border-left:3px solid var(--accent)}
+  .wf-step{background:#fafbff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:6px 0;font-size:13.8px;color:var(--ink)}
+  .wf-step .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;color:#fff;font-size:11px;font-weight:800;margin-right:8px;flex-shrink:0;background:var(--accent)}
+  table.sub-tbl{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0}
+  table.sub-tbl th,table.sub-tbl td{padding:8px 10px;border:1px solid var(--line);text-align:left}
+  table.sub-tbl th{background:#fbfcfe;font-weight:700;color:var(--ink-soft);font-size:12px}
+
+  .grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:start}
+  .radar-wrap{display:flex;flex-direction:column;align-items:center}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:8px}
+  .legend span{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-soft)}
+  .legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .score-note{font-size:12px;color:var(--ink-soft);margin-top:10px;text-align:center}
+
+
+  footer{padding:34px 0;border-top:1px solid var(--line);color:var(--ink-soft);font-size:13px;text-align:center}
+
+  @media (max-width:860px){
+    .grid2{grid-template-columns:1fr}
+    .proj-head{flex-wrap:wrap}
+    .proj-head .meta-right{margin-left:0;align-items:flex-start}
+    .matrix{display:block;overflow-x:auto;white-space:nowrap}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="logo"><span class="dot"></span> AI 内容运营工具链 · 调研</div>
+    <nav class="nav-links">
+      <a href="#summary">概览</a><a href="#matrix">对比矩阵</a>      <a href="#projects">项目详解</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Open Source Research · 2026-07-22</span>
+    <h1>AI 内容运营工具链<br/>六项目深度调研报告</h1>
+    <p class="lead">围绕「内容创作—拆解学习—发布分发—数据校准—商业变现」全链路，对 6 个开源 GitHub 项目进行横向调研，评估其定位、技术形态、工程成熟度与可组合性，为选型与二次开发提供决策依据。</p>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink-soft)">
+      <span style="background:#fff;border:1px solid var(--line);padding:6px 12px;border-radius:10px;box-shadow:var(--shadow)">📅 调研日期：2026-07-22</span>
+      <span style="background:#fff;border:1px solid var(--line);padding:6px 12px;border-radius:10px;box-shadow:var(--shadow)">📦 样本：6 个开源仓库</span>
+      <span style="background:#fff;border:1px solid var(--line);padding:6px 12px;border-radius:10px;box-shadow:var(--shadow)">⭐ 合计 Stars：33,822</span>
+      <span style="background:#fff;border:1px solid var(--line);padding:6px 12px;border-radius:10px;box-shadow:var(--shadow)">📄 来源：GitHub API + README/SKILL.md</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SUMMARY ============ -->
+<section id="summary">
+  <div class="wrap">
+    <div class="sec-head"><div class="k">Executive Summary</div><h2>调研概览与核心结论</h2>
+    <p>六个项目虽形态各异，但共同拼出一条「AI 驱动的内容运营价值链」：从学习对标、校准创作决策，到生产、跨平台发布与商业变现。它们彼此互补，可通过文件系统与统一 Skill 目录（Claude Code / Codex / WorkBuddy）串成工作流。</p></div>
+    <div class="card pad">
+      <p style="margin-top:0"><b>一句话归类：</b></p>
+      <ul style="margin-bottom:0;color:var(--ink-soft)">
+        <li><b>yyl-benchmark-breakdown</b>（<span class="star-badge" style="transform:scale(.78);transform-origin:right center"><svg viewBox="0 0 16 16"/><b>76</b></span>）—— 竞品/对标「拆解器」：给链接，输出可复用的爆款公式 + 画面口播逐段拆解 + 人设定位（视频多模态级）。</li>
+        <li><b>cangjie-skill（仓颉）</b>（<span class="star-badge" style="transform:scale(.78);transform-origin:right center"><svg viewBox="0 0 16 16"/><b>3,958</b></span>）—— 高价值内容「蒸馏器」：把书/长视频/播客蒸馏成可被 Agent 直接调用的 Skill 工具包（RIA-TV++ 流水线）。</li>
+        <li><b>cheat-on-content</b>（<span class="star-badge" style="transform:scale(.78);transform-origin:right center"><svg viewBox="0 0 16 16"/><b>5,761</b></span>）—— 创作「校准系统」：把每次发帖变成盲预测→复盘→进化 rubric 的实验闭环，让直觉可量化。</li>
+        <li><b>video-publisher-skill</b>（<span class="star-badge" style="transform:scale(.78);transform-origin:right center"><svg viewBox="0 0 16 16"/><b>50</b></span>）—— 发布「执行器」：用浏览器自动化把本地视频准备到四平台草稿并停在发布前，默认不发布（强安全）。</li>
+        <li><b>AiToEarn</b>（<span class="star-badge" style="transform:scale(.78);transform-origin:right center"><svg viewBox="0 0 16 16"/><b>23,969</b></span>）—— 全链路「平台」：创作→发布→互动→变现一体化智能体平台，是体量最大、最接近产品的项目。</li>
+        <li><b>ache-chaijie-skill（小红书账号拆解）</b>（<span class="star-badge" style="transform:scale(.78);transform-origin:right center"><svg viewBox="0 0 16 16"/><b>8</b></span>）—— 小红书「账号级拆解器」：给 1–5 个链接，输出账号画像 + 爆款归因 + 真实封面审计 + 对标推荐，自动生成可打开的可视化 HTML 报告。</li>
+      </ul>
+      <p style="margin-bottom:0"><b>关键发现：</b>前五个均为「单点 Skill / 工作流」，AiToEarn 是「平台级产品」，二者不在同一抽象层；Skill 类项目彼此可组合，且都与 AiToEarn 的 Publish/Create 环节存在能力重叠或互补空间。其中 <b>yyl-benchmark-breakdown</b> 与 <b>ache-chaijie-skill</b> 同为「拆解类」但分层不同：前者是视频多模态（画面 + 口播）级，后者是小红书账号 / 封面级，二者均可作为 <b>cheat-on-content</b> 的基准输入（通过 cheat-learn-from 导入）。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MATRIX ============ -->
+<section id="matrix">
+  <div class="wrap">
+    <div class="sec-head"><div class="k">Comparison Matrix</div><h2>项目对比速览矩阵</h2><p>横向对比六个项目在形态、目标平台、核心能力、依赖与风险维度上的差异。红色标记为需重点关注的局限或外部依赖。</p></div>
+    <div class="card" style="overflow:hidden">
+    <table class="matrix"><thead><tr><th>项目</th><th style="min-width:90px">Stars ⭐</th><th>形态 / 定位</th><th>核心能力</th><th>目标平台</th><th>关键依赖</th><th>成熟度</th></tr></thead><tbody>
+      <tr><td class="name">yyl-benchmark-<br/>breakdown</td><td><span class="star-badge"><svg viewBox="0 0 16 16"/><b>76</b><span class="fork-badge">· 12 forks</span></span></td><td><span class="tag">Agent Skill</span><br/>对标拆解</td><td>链接→爆款公式+画面口播拆解+人设定位；自动存档</td><td>抖音/小红书/B站/YouTube/公众号</td><td>Docker、ffmpeg、whisper、本地下载 API</td><td><span class="ok">功能完整</span><br/><span class="warn">二阶段未做</span></td></tr>
+      <tr><td class="name">cangjie-skill<br/>（仓颉）</td><td><span class="star-badge"><svg viewBox="0 0 16 16"/><b>3,958</b><span class="fork-badge">· 542 forks</span></span></td><td><span class="tag">Agent Skill</span><br/>内容蒸馏</td><td>书/视频/播客 → 可执行 Skill 包（七阶段 RIA-TV++）</td><td>Claude Code / Cursor Skills 目录</td><td>Skill 运行时；建议配 video-downloader</td><td><span class="ok">流水线完整</span><br/>30+ 示例包</td></tr>
+      <tr><td class="name">cheat-on-<br/>content</td><td><span class="star-badge"><svg viewBox="0 0 16 16"/><b>5,761</b><span class="fork-badge">· 835 forks</span></span></td><td><span class="tag">Agent Skill</span><br/>创作校准</td><td>打分→盲预测→复盘→进化 rubric；15+ 子技能</td><td>适配 抖音/小红书/B站/LinkedIn/微博/知乎</td><td>Python/Shell、Playwright、GitHub Actions</td><td><span class="ok">闭环完整</span><br/>跨模型审计</td></tr>
+      <tr><td class="name">video-publisher-<br/>skill</td><td><span class="star-badge"><svg viewBox="0 0 16 16"/><b>50</b><span class="fork-badge">· 5 forks</span></span></td><td><span class="tag">Agent Skill</span><br/>发布执行</td><td>本地视频→四平台草稿；状态化调度；默认不发布</td><td>小红书/抖音/B站/微信视频号</td><td><span class="grow">Ego Lite</span>、Node 18+</td><td><span class="ok">真实回归测试</span><br/>硬安全保护</td></tr>
+      <tr><td class="name">AiToEarn</td><td><span class="star-badge"><svg viewBox="0 0 16 16"/><b>23,969</b><span class="fork-badge">· 3,685 forks</span></span></td><td><span class="tag">平台产品</span><br/>全链路</td><td>Create/Publish/Engage/Monetize 四 Agent 闭环</td><td>13+ 平台（含 TikTok/YouTube/FB…）</td><td>Node20/MongoDB/Redis/Docker/Electron</td><td><span class="ok">v2.5 产品级</span><br/>2614 commits</td></tr>
+      <tr><td class="name">ache-chaijie-<br/>skill</td><td><span class="star-badge"><svg viewBox="0 0 16 16"/><b>8</b><span class="fork-badge">· 0 forks</span></span></td><td><span class="tag">Agent Skill</span><br/>账号拆解</td><td>链接→账号画像+爆款归因+封面审计+对标推荐；可视化 HTML 报告</td><td>小红书</td><td>无强制依赖；可选 xiaohongshu-cli/Playwright/Cookie</td><td><span class="ok">报告完整</span><br/><span class="warn">仅小红书单平台</span></td></tr>
+    </tbody></table></div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head"><div class="k">Deep Dive</div><h2>六个项目逐一详解</h2><p>每个项目按统一结构展开：基础信息→核心能力→工作流→技术依赖→活跃度→优势→局限→适用场景。其中 yyl-benchmark-breakdown 与 ache-chaijie-skill 为本次已安装实测的拆解类 Skill，其余为公开文档调研。</p></div>
+
+    <!-- ==================== P1 ==================== -->
+    <div class="proj">
+      <div class="proj-head">
+        <div class="idx" style="background:var(--c1)">1</div>
+        <div><h3>yyl-benchmark-breakdown</h3><div class="repo">github.com/ttfake92-lab/skills · skills/yyl-benchmark-breakdown</div></div>
+        <div class="meta-right">
+          <span class="star-badge"><svg viewBox="0 0 16 16"/><b>76</b><span class="fork-badge">· 12 forks</span></span>
+          <span style="font-size:13px;color:var(--ink-soft)">丢一个链接，把对标内容拆到「能复用」的程度</span>
+        </div>
+      </div>
+      <div class="proj-body">
+
+        <div class="sub-sec"><h4 class="fw-title">一、基础信息</h4>
+          <div class="field">
+            <p><b>GitHub 地址：</b><a href="https://github.com/ttfake92-lab/skills/blob/main/skills/yyl-benchmark-breakdown/SKILL.md" target="_blank">ttfake92-lab/skills/blob/main/skills/yyl-benchmark-breakdown/SKILL.md</a></p>
+            <p><b>项目定位：</b>国内短视频多模态对标拆解 Agent Skill，核心职能为抓取平台内容、多模态解析、生成可复用爆款模板、本地归档竞品样本库</p>
+            <p><b>核心关键词：</b>竞品拆解、多模态解析、短视频爬虫、画面口播对齐、benchmark 样本库</p>
+          </div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">二、核心完整工作流（8 阶段标准化执行）</h4>
+          <div class="wf-step"><span class="step-num" style="background:var(--c1)">1</span><b>前置依赖自检：</b>自动校验 Docker、ffmpeg、Whisper、Douyin_TikTok_Download_API、XHS-Downloader，缺失自动输出安装命令</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c1)">2</span><b>链接识别分层：</b>自动区分抖音 / 小红书 / B 站 / YouTube / 公众号，区分单条内容 / 整账号批量解析</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c1)">3</span><b>素材自动采集流水线：</b>Docker 拉起本地爬虫 API，下载无水印视频 / 图文，ffmpeg 提取音轨</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c1)">4</span><b>多模态处理：</b>Whisper 中文语音转完整口播稿，视频场景抽帧生成 Contact Sheet 视觉拼图</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c1)">5</span><b>四级降级抓取策略：</b>本地爬虫 API → TikHub 海外中转 → Jina 网页解析 → 用户手动粘贴兜底，无强制报错</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c1)">6</span><b>双层拆解逻辑：</b>
+            <ul style="margin:4px 0 0 18px"><li><i>单条视频：</i>时间轴对齐画面 + 口播，拆解钩子、节奏、CTA、视觉符号</li><li><i>账号批量：</i>抓取 5–15 条样本，提炼固定选题、视觉矩阵、差异化人设</li></ul>
+          </div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c1)">7</span><b>标准化三件套输出：</b>可复用爆款公式、画面口播逐帧拆解报告、账号人设定位文档</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c1)">8</span><b>自动持久归档：</b>报告 + 素材存入 <code>benchmarks/[平台-账号]/</code> 目录，构建长期竞品基准库</div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">三、强制铁律（项目核心约束）</h4>
+          <div class="flag good">✅ 依赖自检通过后全自动执行，无需用户二次确认</div>
+          <div class="flag good">✅ 短视频必须同时具备完整口播文稿 + 视觉抽帧证据，禁止仅靠封面文案分析</div>
+          <div class="flag good">✅ 报告末尾强制附完整转录原文，禁止只输出摘要</div>
+          <div class="flag good">✅ 输出导向「可复用模板」，而非单纯复述竞品内容</div>
+          <div class="flag good">✅ 所有拆解素材本地持久化，构建可迭代行业基准库</div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">四、技术依赖清单</h4>
+          <div class="pill-row">
+            <span class="pill tool">Docker Desktop（必需）</span>
+            <span class="pill tool">ffmpeg（必需）</span>
+            <span class="pill tool">openai-whisper（必需）</span>
+            <span class="pill tool">Douyin_TikTok_Download_API（必需）</span>
+            <span class="pill tool">XHS-Downloader（必需）</span>
+            <span class="pill lang">TikHub API（可选·海外兜底）</span>
+            <span class="pill lang">Jina Reader（可选·公众号图文）</span>
+          </div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">五、适用场景与边界</h4>
+          <div class="field">
+            <p><b>适用场景：</b>短视频矩阵运营、数字人账号对标调研、赛道爆款模板提取、新账号前期选题参考、竞品差异化分析</p>
+            <p><b>能力边界：</b></p>
+            <ul>
+              <li>仅做内容调研分析，无脚本生成、内容打分、多平台发布、流量数据复盘能力</li>
+              <li>仅输出 Markdown 拆解报告，不支持直接产出短视频 / 图文成品</li>
+              <li>依赖本地 Docker 爬虫，无云端开箱能力，初次部署环境复杂度高</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">六、项目优势</h4>
+          <div class="flag good">✅ 国内短视频平台原生适配，完整覆盖图文 / 短视频双形态</div>
+          <div class="flag good">✅ 业内独有的画面 + 口播时间轴对齐拆解体系，兼顾视觉与文案双维度</div>
+          <div class="flag good">✅ 四级抓取降级策略，容错率极高，不会因链接失效中断工作流</div>
+          <div class="flag good">✅ 标准化归档机制，长期沉淀可复用行业竞品数据库</div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">七、活跃度</h4>
+          <div class="facts">
+            <div class="fact"><div class="v">76</div><div class="k">⭐ Stars</div></div>
+            <div class="fact"><div class="v">12</div><div class="k">🔱 Forks</div></div>
+            <div class="fact"><div class="v">Python</div><div class="k">主语言</div></div>
+            <div class="fact"><div class="v">2026-07-05</div><div class="k">最近推送</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== P2 ==================== -->
+    <div class="proj">
+      <div class="proj-head">
+        <div class="idx" style="background:var(--c2)">2</div>
+        <div><h3>cangjie-skill（仓颉技能）</h3><div class="repo">github.com/kangarooking/cangjie-skill</div></div>
+        <div class="meta-right">
+          <span class="star-badge"><svg viewBox="0 0 16 16"/><b>3,958</b><span class="fork-badge">· 542 forks</span></span>
+          <span style="font-size:13px;color:var(--ink-soft)">读完、看完、听完，带走一套能调用的方法论</span>
+        </div>
+      </div>
+      <div class="proj-body">
+
+        <div class="sub-sec"><h4 class="fw-title">一、基础信息</h4>
+          <div class="field">
+            <p><b>GitHub 地址：</b><a href="https://github.com/kangarooking/cangjie-skill" target="_blank">github.com/kangarooking/cangjie-skill</a></p>
+            <p><b>项目定位：</b>长文本知识蒸馏工具链，将书籍、课程、播客、长视频文稿提炼为 AI Agent 可独立调用的标准化 Skill 包</p>
+            <p><b>核心关键词：</b>RIA-TV++ 蒸馏流水线、三重验证、知识结构化、方法论提取、书本转 AI 工具</p>
+          </div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">二、核心技术：RIA-TV++ 六阶段蒸馏流水线</h4>
+          <div class="wf-step"><span class="step-num" style="background:var(--c2)">①</span><b>Adler 全书整体分析：</b>分层拆解书籍结构、核心论点、适用场景，输出 BOOK_OVERVIEW.md 全局图谱</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c2)">②</span><b>五路并行提取器：</b>同步抽取框架、原则、实战案例、反例、专业术语，批量产出候选方法论单元</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c2)">③</span><b>三重验证筛选（核心质控）：</b>
+            <ul style="margin:4px 0 0 18px">
+              <li><b>跨域佐证：</b>原文至少 2 处独立内容支撑</li>
+              <li><b>预测能力：</b>可解决原文未覆盖的全新场景</li>
+              <li><b>非常识过滤：</b>剔除大众基础认知内容</li>
+              <li>筛选通过率仅 <b>25%–50%</b>，严格过滤无效知识</li>
+            </ul>
+          </div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c2)">④</span><b>RIA++ 六维结构化封装：</b>R 原文引用 / I 释义 / A1 书中案例 / A2 业务触发场景 / E 可执行步骤 / B 适用边界</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c2)">⑤</span><b>Zettelkasten 知识网络：</b>梳理 Skill 之间依赖、组合、对立关系，生成 INDEX.md 技能地图</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c2)">⑥</span><b>压力测试交付：</b>构造诱饵测试用例校验触发精度，输出可直接导入 Claude 的完整 Skill 仓库</div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">三、预置成熟 Skill 资产库</h4>
+          <div class="field"><p>已完成 <b>20+</b> 经典内容蒸馏，覆盖商业、投资、营销、中医、社科：<b>巴菲特致股东信、《穷查理宝典》《影响力》《爆款文案》《黄帝内经》《毛选》《孙子兵法》</b>等，每个著作输出 <b>10–25 个</b>独立可调用 Skill。</p></div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">四、生态联动体系</h4>
+          <div class="field">
+            <p>同作者三大协同项目：</p>
+            <table class="sub-tbl"><tr><th>项目</th><th>职能</th></tr><tr><td><b>nuwa-skill</b></td><td>蒸馏人物思维逻辑（巴菲特、段永平）</td></tr><tr><td><b>cangjie-skill</b></td><td>蒸馏书籍 / 课程标准化方法论（本项目）</td></tr><tr><td><b>darwin-skill</b></td><td>自动迭代优化已有 Skill 的执行精度</td></tr></table>
+          </div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">五、适用场景与边界</h4>
+          <div class="field">
+            <p><b>适用场景：</b>内容创作底层理论支撑、商业决策分析、文案写作框架沉淀、短视频爆款逻辑提炼、长期知识资产数字化</p>
+            <p><b>能力边界：</b></p>
+            <ul>
+              <li>无短视频爬虫、视频解析、竞品抓取能力，不直接处理短视频链接</li>
+              <li>仅输出理论方法论 Skill，不具备内容打分、发布、流量复盘等运营功能</li>
+              <li>输入素材仅限纯文本（书籍、字幕文稿、播客文字），无法直接解析视频文件</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">六、项目优势</h4>
+          <div class="flag good">✅ 独创三重验证质控机制，规避 AI 提炼碎片化、无效知识</div>
+          <div class="flag good">✅ 标准化 Skill 输出格式，无缝对接 Cursor/Claude 所有内容工具</div>
+          <div class="flag good">✅ 知识网络化设计，支持多技能组合联动解决复杂创作需求</div>
+          <div class="flag good">✅ 大量成熟预置技能包，开箱即可用于文案、选题、商业分析</div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">七、活跃度</h4>
+          <div class="facts">
+            <div class="fact"><div class="v">3,958</div><div class="k">⭐ Stars</div></div>
+            <div class="fact"><div class="v">542</div><div class="k">🔱 Forks</div></div>
+            <div class="fact"><div class="v">Python</div><div class="k">主语言</div></div>
+            <div class="fact"><div class="v">2026-07-20</div><div class="k">最近推送</div></div>
+            <div class="fact"><div class="v">MIT</div><div class="k">协议</div></div>
+            <div class="fact"><div class="v">39</div><div class="k">Commits</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== P3 ==================== -->
+    <div class="proj">
+      <div class="proj-head">
+        <div class="idx" style="background:var(--c3)">3</div>
+        <div><h3>cheat-on-content</h3><div class="repo">github.com/XBuilderLAB/cheat-on-content</div></div>
+        <div class="meta-right">
+          <span class="star-badge"><svg viewBox="0 0 16 16"/><b>5,761</b><span class="fork-badge">· 835 forks</span></span>
+          <span style="font-size:13px;color:var(--ink-soft)">把每次发帖变成可校准的实验</span>
+        </div>
+      </div>
+      <div class="proj-body">
+
+        <div class="sub-sec"><h4 class="fw-title">一、基础信息</h4>
+          <div class="field">
+            <p><b>GitHub 地址：</b><a href="https://github.com/XBuilderLAB/cheat-on-content" target="_blank">github.com/XBuilderLAB/cheat-on-content</a></p>
+            <p><b>项目定位：</b>短视频创作者全链路自进化内容实验闭环 Skill 套件，核心目标把「凭感觉创作」转为「数据校准式内容实验」</p>
+            <p><b>核心关键词：</b>自进化评分标尺、盲预测机制、T+3 数据复盘、内容实验闭环、账号专属爆款公式</p>
+          </div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">二、核心业务闭环（标准化五步实验流程）</h4>
+          <div class="wf-step"><span class="step-num" style="background:var(--c3)">1</span><b>草稿量化打分（cheat-score）：</b>基于账号历史数据、行业基准对标，对脚本、封面、标题进行多维度量化评分</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c3)">2</span><b>不可篡改盲预测（cheat-predict）：</b>发布前强制记录播放、互动预测值，系统钩子锁定记录，杜绝事后修改</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c3)">3</span><b>内容发布登记（cheat-shoot/cheat-publish）：</b>记录素材、发布渠道、排期，维护内容产能缓冲区</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c3)">4</span><b>T+3 天数据复盘（cheat-retro）：</b>自动抓取平台真实播放、点赞、转化数据，对比预测偏差定位内容缺陷</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c3)">5</span><b>评分标尺迭代（cheat-bump）：</b>连续三次预测偏差自动触发标尺升级，升级前全量重校验历史样本，确保精度提升才生效</div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">三、内置子 Skill 体系</h4>
+          <table class="sub-tbl">
+            <tr><th>子技能</th><th>核心功能</th></tr>
+            <tr><td>cheat-init</td><td>项目初始化，生成目录与本地知识库</td></tr>
+            <tr><td>cheat-learn-from</td><td>从对标账号导入 script + 数据，拆解 pattern 并派生基准信号（不限于 yyl）</td></tr>
+            <tr><td>cheat-score</td><td>多维度内容质量打分</td></tr>
+            <tr><td>cheat-predict</td><td>发布前盲流量预测</td></tr>
+            <tr><td>cheat-shoot</td><td>素材拍摄归档、产能缓冲管理</td></tr>
+            <tr><td>cheat-publish</td><td>多平台发布记录</td></tr>
+            <tr><td>cheat-retro</td><td>流量数据复盘、偏差分析</td></tr>
+            <tr><td>cheat-bump</td><td>迭代更新账号专属评分规则</td></tr>
+            <tr><td>cheat-recommend</td><td>基于历史爆款推荐选题</td></tr>
+            <tr><td>cheat-trends</td><td>抓取平台热点话题</td></tr>
+          </table>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">四、三大核心防自欺铁律（项目核心创新）</h4>
+          <div class="flag good">🔒 <b>盲预测锁死：</b>预测记录写入本地归档，发布后不可修改，规避创作者主观修正数据</div>
+          <div class="flag good">🔒 <b>标尺升级全量校验：</b>更新评分规则必须重算全部历史内容，精度优于旧版本方可生效</div>
+          <div class="flag good">🔒 <b>精简知识库机制：</b>被数据证伪的创作观察自动删除，仅留存有效判断逻辑</div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">五、适用场景与边界</h4>
+          <div class="field">
+            <p><b>适用场景：</b>短视频矩阵长期运营、数字人账号数据化迭代、个人 IP 爆款沉淀、批量内容精细化运营、内容工作室标准化流程</p>
+            <p><b>能力边界：</b></p>
+            <ul>
+              <li>无原生竞品抓取、视频拆解能力，必须搭配 yyl-benchmark-breakdown 获取行业基准</li>
+              <li>无理论方法论提取能力，选题、文案框架依赖 cangjie-skill 提供底层逻辑</li>
+              <li>不内置多平台发布爬虫，需配套 video-publisher 类分发 Skill 完成上线</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">六、项目优势</h4>
+          <div class="flag good">✅ 行业唯一自进化账号专属评估体系，区别通用大模型统一评判标准</div>
+          <div class="flag good">✅ 完整内容实验闭环，打通创作 - 发布 - 复盘 - 迭代全链路</div>
+          <div class="flag good">✅ 内置强制防主观作弊机制，量化创作直觉，沉淀可复用账号爆款公式</div>
+          <div class="flag good">✅ 标准化 MCP 接口，可无缝串联竞品拆解、知识蒸馏、发布类第三方 Skill</div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">七、活跃度</h4>
+          <div class="facts">
+            <div class="fact"><div class="v">5,761</div><div class="k">⭐ Stars</div></div>
+            <div class="fact"><div class="v">835</div><div class="k">🔱 Forks</div></div>
+            <div class="fact"><div class="v">Python</div><div class="k">主语言</div></div>
+            <div class="fact"><div class="v">2026-07-13</div><div class="k">最近推送</div></div>
+            <div class="fact"><div class="v">MIT</div><div class="k">协议</div></div>
+            <div class="fact"><div class="v">40</div><div class="k">Commits</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== P4 ==================== -->
+    <div class="proj">
+      <div class="proj-head">
+        <div class="idx" style="background:var(--c4)">4</div>
+        <div><h3>video-publisher-skill</h3><div class="repo">github.com/oil-oil/video-publisher-skill</div></div>
+        <div class="meta-right">
+          <span class="star-badge"><svg viewBox="0 0 16 16"/><b>50</b><span class="fork-badge">· 5 forks</span></span>
+          <span style="font-size:13px;color:var(--ink-soft)">把本地视频准备到四平台草稿，停在发布前</span>
+        </div>
+      </div>
+      <div class="proj-body">
+        <div class="field"><p><b>定位：</b>发布「执行器」Skill。给它一个本地视频，它通过 Ego Lite 操作真实创作者页面，为小红书/抖音/Bilibili/微信视频号完成上传、标题与标签、原创声明、可选封面和发布前检查。<b>默认不点最终发布按钮</b>，需用户明确授权。</p></div>
+        <div class="field"><p><b>核心功能：</b>状态化调度器（并行检查→并行上传→串行填写→并行验收）、四平台发布前准备、断点恢复（任务空间/草稿身份/状态备份持久化）、onboarding 按实际拥有账号动态配置默认平台。</p></div>
+        <div class="field"><p><b>安全设计最强：</b>发布按钮硬保护、原创声明策略门控、路径精确核对、用户接管即停。19轮/48次误触真实回归测试覆盖崩溃/中断/ID复用等场景。</p></div>
+        <div class="field"><p><b>局限：</b>强绑定 Ego Lite 第三方浏览器服务；抖音 >15:00 视频前置拦截；不做剪辑/转码/封面制作。</p></div>
+        <div class="field"><p><b>适用：</b>已有成片、需安全多平台分发且坚持「人工最后确认」的创作者。</p></div>
+        <div class="facts">
+          <div class="fact"><div class="v">50</div><div class="k">⭐ Stars</div></div>
+          <div class="fact"><div class="v">5</div><div class="k">🔱 Forks</div></div>
+          <div class="fact"><div class="v">JavaScript</div><div class="k">主语言</div></div>
+          <div class="fact"><div class="v">2026-07-16</div><div class="k">最近推送</div></div>
+          <div class="fact"><div class="v">22</div><div class="k">Commits</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== P5 ==================== -->
+    <div class="proj">
+      <div class="proj-head">
+        <div class="idx" style="background:var(--c5)">5</div>
+        <div><h3>AiToEarn</h3><div class="repo">github.com/yikart/AiToEarn</div></div>
+        <div class="meta-right">
+          <span class="star-badge"><svg viewBox="0 0 16 16"/><b>23,969</b><span class="fork-badge">· 3,685 forks</span></span>
+          <span style="font-size:13px;color:var(--ink-soft)">用 AI 去赚钱：创作→发布→互动→变现</span>
+        </div>
+      </div>
+      <div class="proj-body">
+        <div class="field"><p><b>定位：</b>开源 AI 内容营销智能体<b>平台</b>（体量最大、最接近产品）：帮助 OPC（一人公司）、创作者、品牌与企业，在全球主流平台构建、分发并变现内容。四大 Agent 能力闭环——Monetize（变现）/ Publish（发布）/ Engage（互动）/ Create（创作）。官网：<a href="https://aitoearn.ai/" target="_blank">aitoearn.ai</a></p></div>
+        <div class="field">
+          <p><b>四大 Agent 能力：</b></p>
+          <ul>
+            <li><b>Create</b>：调用 Grok/Veo/Seedance/Nano Banana 等生成视频/图文，支持批量</li>
+            <li><b>Publish</b>：一键分发 13+ 平台（抖音/小红书/快手/B站/视频号/TikTok/YouTube/FB/IG/Threads/X/Pinterest/LinkedIn）+ 日历排期</li>
+            <li><b>Engage</b>：浏览器插件自动点赞/关注、AI 智能回复、评论挖掘、品牌监测</li>
+            <li><b>Monetize</b>：内容交易市场，按 CPS/CPE/CPM 效果结算商家推广任务</li>
+          </ul>
+        </div>
+        <div class="field">
+          <p><b>技术栈：</b></p>
+          <div class="pill-row">
+            <span class="pill tool">Node.js 20.18</span><span class="pill tool">Nx monorepo</span><span class="pill tool">Electron</span>
+            <span class="pill tool">Docker</span><span class="pill tool">MongoDB / Redis</span><span class="pill tool">MCP 协议</span>
+            <span class="pill tool">OAuth Relay</span><span class="pill tool">TypeScript</span>
+          </div>
+        </div>
+        <div class="field"><p><b>五种使用方式：</b>网站直用 / OpenClaw / Claude·Cursor(MCP) / Docker / 源码。v2.5 拆分 Server Relay 与 AI Relay。</p>
+        <p><b>局限：</b>体量最大、依赖栈最重（Mongo/Redis/Docker），运维成本高；自动化互动涉及合规边界。</p>
+        <p><b>适用：</b>想一站式跑通「内容生产→多平台分发→互动运营→商业变现」的个人/小团队。</p></div>
+        <div class="facts">
+          <div class="fact"><div class="v">23,969</div><div class="k">⭐ Stars</div></div>
+          <div class="fact"><div class="v">3,685</div><div class="k">🔱 Forks</div></div>
+          <div class="fact"><div class="v">TypeScript</div><div class="k">主语言</div></div>
+          <div class="fact"><div class="v">2026-07-09</div><div class="k">最近推送</div></div>
+          <div class="fact"><div class="v">v2.5.0</div><div class="k">当前版本</div></div>
+          <div class="fact"><div class="v">2,614</div><div class="k">Commits</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== P6 ==================== -->
+    <div class="proj">
+      <div class="proj-head">
+        <div class="idx" style="background:var(--c6)">6</div>
+        <div><h3>ache-chaijie-skill（小红书账号拆解）</h3><div class="repo">github.com/acheAIsuiyimen/ache-chaijie-skill</div></div>
+        <div class="meta-right">
+          <span class="star-badge"><svg viewBox="0 0 16 16"/><b>8</b><span class="fork-badge">· 0 forks</span></span>
+          <span style="font-size:13px;color:var(--ink-soft)">一句话拆透一个小红书账号</span>
+        </div>
+      </div>
+      <div class="proj-body">
+
+        <div class="sub-sec"><h4 class="fw-title">一、基础信息</h4>
+          <div class="field">
+            <p><b>GitHub 地址：</b><a href="https://github.com/acheAIsuiyimen/ache-chaijie-skill" target="_blank">github.com/acheAIsuiyimen/ache-chaijie-skill</a></p>
+            <p><b>项目定位：</b>小红书账号与竞品拆解 Agent Skill。输入 1–5 个账号链接直接分析，或先确认画像（赛道/内容类型/目标用户/转化目标）再推荐对标账号；结合真实封面视觉审计与小红书内容机制，输出爆款归因、可复制公式、选题建议，并自动生成可打开的可视化 HTML 报告。</p>
+            <p><b>核心关键词：</b>账号拆解、爆款归因、封面视觉审计、对标账号发现、可视化 HTML 报告、公开数据优先</p>
+          </div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">二、核心能力矩阵</h4>
+          <div class="wf-step"><span class="step-num" style="background:var(--c6)">①</span><b>账号深度拆解：</b>基于真实主页与公开内容，分析定位人设、选题策略、爆款内容模型、封面与标题规律、评论区运营逻辑、商业化路径、内容迭代与当前增长策略——重点回答「这个账号为什么能做起来」。</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c6)">②</span><b>智能寻找对标账号：</b>无现成对标时，按赛道/内容类型/目标用户/转化目标自动推荐 2 个成熟标杆 + 3 个当前可对标账号，并明确区分「已验证的小红书主页账号」与「外部搜索待验证账号」，避免错误对标。</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c6)">③</span><b>爆款模式识别：</b>识别内容中的有效复用、模板迭代、内容矩阵、机械复制，判断增长来自偶发爆款还是已形成稳定内容系统。</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c6)">④</span><b>封面与内容结构分析：</b>直接分析真实笔记样本（封面文案、主体设计、构图、配色、视觉钩子、信任证据、内容结构、评论反馈），避免只看数据不看内容。</div>
+          <div class="wf-step"><span class="step-num" style="background:var(--c6)">⑤</span><b>账号成长路径还原：</b>当公开样本充足时，还原早期探索 → 内容转折 → 爆发阶段 → 当前稳定打法，理解账号如何一步步跑出来。</div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">三、分析原则（强约束）</h4>
+          <div class="flag good">✅ 所有结论仅基于公开可验证信息（主页/真实笔记/封面/标题/评论/公开数据），不编造阅读量、流量、转化、商业合作等后台指标</div>
+          <div class="flag good">✅ 无法确认的信息明确标注「未公开/未获取」，不臆测</div>
+          <div class="flag good">✅ 优先让用户本地浏览器登录授权，不把密码或 Cookie 粘贴进对话/仓库/公开文件，不绕过验证码、权限或平台风控</div>
+          <div class="flag good">✅ 首次「无法访问」不当作最终结果，会先排查宿主内置浏览器/Skills/连接器，再推荐外部方案或截图提交</div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">四、输出与运行方式</h4>
+          <div class="field">
+            <p><b>默认产出：</b>单页 HTML 可视化报告，含账号画像、内容模型分析、爆款案例拆解、成长路径复盘、对标学习建议、三阶段行动路线图；报告中账号/笔记/案例/封面均保留原始链接，可直接跳转访问。</p>
+            <p><b>交互模式：</b></p>
+            <ul>
+              <li><b>直接分析：</b>给 1–5 个链接即直接开拆，不强制先答定位问题；完成后写 HTML 报告到工作区，聊天只留关键结论。</li>
+              <li><b>先找对标：</b>无现成账号时，先问一个高信息量问题并用选择题补齐画像，用户确认后才搜索并给 5 个候选，区分已验证/待验证。</li>
+              <li><b>横向对比：</b>支持 2–5 个账号同屏对比、对标账号发现、爆款模式分析。</li>
+            </ul>
+            <p><b>安装：</b>clone 整个目录放入 Agent 的 skills 目录（入口 SKILL.md）；WorkBuddy 等若支持 GitHub 导入 Skill 可直接导入。可选工具不强制绑定某一插件（Agent-Reach / xiaohongshu-cli / Playwright 任一即可）。</p>
+          </div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">五、技术依赖与边界</h4>
+          <div class="pill-row">
+            <span class="pill tool">Skill 目录运行（轻）</span>
+            <span class="pill lang">xiaohongshu-cli（可选）</span>
+            <span class="pill lang">Playwright（可选）</span>
+            <span class="pill lang">Agent-Reach（可选）</span>
+            <span class="pill lang">平台 Cookie/登录态（可能影响可用数据）</span>
+          </div>
+          <div class="field" style="margin-top:12px">
+            <p><b>适用场景：</b>小红书起号对标、竞品账号分析、爆款公式提取、数字人/垂类账号前期选题、内容团队快速学习优秀账号增长逻辑。</p>
+            <p><b>能力边界：</b></p>
+            <ul>
+              <li>仅覆盖小红书单平台，不做抖音/B站/YouTube 等跨平台拆解</li>
+              <li>账号/封面级拆解，<b>不做视频转写与口播逐帧拆解</b>（那是 yyl-benchmark-breakdown 的领地）</li>
+              <li>无内容打分、脚本生成、多平台发布、流量数据复盘能力（需搭配 cheat-on-content / video-publisher-skill）</li>
+              <li>结论质量依赖平台公开数据丰度；登录态/Cookie 缺失时可用样本会减少</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">六、项目优势</h4>
+          <div class="flag good">✅ 真实封面视觉审计，不空谈数据——直接读封面文案、构图、配色、视觉钩子</div>
+          <div class="flag good">✅ 可视化 HTML 报告开箱即用，原始链接可追溯，降低「结论不可信」风险</div>
+          <div class="flag good">✅ 强隐私与安全约束（不绕过风控、不存密码 Cookie），部署轻、无 Docker/重型依赖</div>
+          <div class="flag good">✅ 显式区分「已验证站内账号」与「外部待验证」，有效规避错误对标</div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">七、活跃度</h4>
+          <div class="facts">
+            <div class="fact"><div class="v">8</div><div class="k">⭐ Stars</div></div>
+            <div class="fact"><div class="v">0</div><div class="k">🔱 Forks</div></div>
+            <div class="fact"><div class="v">HTML</div><div class="k">主语言</div></div>
+            <div class="fact"><div class="v">2026-06-23</div><div class="k">最近推送</div></div>
+            <div class="fact"><div class="v">MIT</div><div class="k">协议</div></div>
+            <div class="fact"><div class="v">34</div><div class="k">Commits</div></div>
+          </div>
+        </div>
+
+        <div class="sub-sec"><h4 class="fw-title">八、实战产出（本调研已用该 Skill 生成）</h4>
+          <div class="field">
+            <p>以下两份报告由本次调研在本地实际运行 <b>ache-chaijie-skill</b> 生成，是该 Skill 能力的直接物证；点击卡片在新标签页打开完整 HTML 报告（与本研究报告同目录，相对链接可直接访问）。</p>
+          </div>
+          <div class="facts" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
+            <a class="fact" href="百岁少女养成手册_xhs_account_report.html" target="_blank" style="text-decoration:none;color:inherit;display:block">
+              <div class="v" style="font-size:14px;line-height:1.4">📄 百岁少女养成手册 · 账号拆解</div>
+              <div class="k" style="margin-top:8px">单账号深度拆解：定位人设、内容模型、爆款逻辑、30 篇封面视觉审计、成长路径复盘与三阶段行动路线图。</div>
+            </a>
+            <a class="fact" href="数字人健康科普_对标拆解报告.html" target="_blank" style="text-decoration:none;color:inherit;display:block">
+              <div class="v" style="font-size:14px;line-height:1.4">📄 数字人健康科普 · 对标拆解</div>
+              <div class="k" style="margin-top:8px">对标账号发现：数字人 + 企业家健康赛道，4 个小红书站内已验证账号（陆乔安Joanne / 营养师赵兆 / 欧阳会食养 / 自然养生道）。</div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p style="margin-bottom:0">AI 内容运营工具链调研 · 6 项目 · 合计 33,822 Stars · MIT 开源</p>
+  </div>
+</footer>
+
+<script>
+// star icon SVG path
+document.querySelectorAll('.star-badge svg').forEach(function(s){ s.setAttribute('viewBox','0 0 16 16'); s.innerHTML='<path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.751.751 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/>'; });
+
+</script>
+</body>
+</html>
