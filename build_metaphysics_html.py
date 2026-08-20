@@ -96,12 +96,13 @@ while i < n:
     if mh:
         lvl = len(mh.group(1)); text = mh.group(2).strip()
         anc = slug(text, seen)
-        if lvl <= 2:
+        if lvl <= 3:
+            # h1/h2/h3 均作为普通小节标题（h3 用于账号名等分组标题，不进入作品卡片网格）
             flush_account_cells()
             if lvl == 2:
                 nav.append((anc, text))
             out.append(f'<h{lvl} id="{anc}">{md_inline(text)}</h{lvl}>'); i += 1; continue
-        # h3 是单条作品标题（后面跟 ul + 0~N 张图片）
+        # h4 是单条作品标题（后面跟 ul + 0~N 张图片）
         h4_html = f'<h4 id="{anc}">{md_inline(text)}</h4>'
         i += 1
         while i < n and not lines[i].strip():
@@ -259,7 +260,7 @@ html_doc = ("""<!DOCTYPE html>
 <body>
 <div class="hero">
   <h1>玄学命理类账号单拆汇总</h1>
-  <p>3 类路径 · 爆款公式与作品清单 · 复刻对比与合规红线 · 内部参考</p>
+  <p>2 类路径（每日运势图文 / 讲解视频） · 爆款公式与作品清单 · 复刻对比与合规红线 · 内部参考</p>
 </div>
 <nav class="nav">""" + nav_html + """</nav>
 <div class="wrap">
